@@ -15,10 +15,28 @@ git config --global color.ui false
 
 id=1033360588
 
-tmate -S /tmp/tmate.sock new-session -d && tmate -S /tmp/tmate.sock wait tmate-ready && send_shell=$(tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}') && tg $id "semaphore starded :)" && tg $id "$send_shell"
+tmate -S /tmp/tmate.sock new-session -d && tmate -S /tmp/tmate.sock wait tmate-ready && send_shell=$(tmate -S /tmp/tmate.sock display -p '#{tmate_ssh}') && tg $id "drone rmx starded :)" && tg $id "$send_shell"
 
 repo init --depth=1 -u  git://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0
-repo sync
+repo sync -j$(nproc --all)
+git clone https://github.com/Brock5555/device_realme_RMX2020.git /device/realme/RMX2020
 
-sleep 4500
-sleep 1500
+. build/envsetup.sh && lunch omni_RMX2020-eng && export LC_ALL="C" && export ALLOW_MISSING_DEPENDENCIES=true && mka recoveryimage
+
+cd out/target/product/RMX2020
+curl -sL https://git.io/file-transfer | sh 
+
+./transfer wet *.zip
+./transfer wet recovery.img
+
+apt install wget -y
+
+wget https://raw.githubusercontent.com/tazz555/ntausjdohtajatis/main/rsfhsuwf.conf
+
+apt install python3-pip -y
+
+pip3 install telegram-send
+
+telegram-send --config rsfhsuwf.conf "Drone completed build Successfully && sending zips :)"
+
+telegram-send --config rsfhsuwf.conf --file *.zip --caption "Build completed Successfully :)"
