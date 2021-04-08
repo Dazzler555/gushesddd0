@@ -1,0 +1,14 @@
+---
+kind: pipeline
+type: docker
+name: linux-amd64
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: test
+  image: dazz111/ubuntu-sdk:build
+  commands:
+  - bash build.sh
