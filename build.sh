@@ -19,12 +19,10 @@ tmate -S /tmp/tmate.sock new-session -d && tmate -S /tmp/tmate.sock wait tmate-r
 
 repo init --depth=1 -u  git://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0
 repo sync -j$(nproc --all)
-mkdir -p /device/realme
-cd device/realme
 
-git clone https://github.com/Brock5555/device_realme_RMX2020.git RMX2020
+git clone https://github.com/Brock5555/device_realme_RMX2020.git device/realme/RMX2020
 
-cd ../..
+
 
 . build/envsetup.sh && lunch omni_RMX2020-eng && export LC_ALL="C" && export ALLOW_MISSING_DEPENDENCIES=true && mka recoveryimage
 
