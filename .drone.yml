@@ -11,4 +11,5 @@ steps:
 - name: test
   image: dazz111/ubuntu-sdk:build
   commands:
+  - docker login -u $USER_NAME -p $PASSWORD
   - bash build.sh
